@@ -356,5 +356,39 @@ namespace EasyTool
             chars[0] = char.ToLower(chars[0]);
             return new string(chars);
         }
+
+        /// <summary>
+        /// 将字符串转换为 Base64 编码字符串
+        /// </summary>
+        /// <param name="str">要处理的字符串</param>
+        /// <returns>处理后的字符串</returns>
+        public static string EncodeBase64(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return null;
+            }
+
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+            return Convert.ToBase64String(bytes);
+        }
+
+        /// <summary>
+        /// 将给定的 Base64 编码字符串转换为原字符串
+        /// </summary>
+        /// <param name="str">要处理的字符串</param>
+        /// <returns>处理后的字符串,如果解码失败则返回null</returns>
+        public static string DecodeBase64(string str)
+        {
+            try
+            {
+                byte[] bytes = Convert.FromBase64String(str);
+                return Encoding.UTF8.GetString(bytes);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
