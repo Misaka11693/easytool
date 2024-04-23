@@ -1,28 +1,42 @@
 ﻿using System;
 using System.Collections;
 
-public static class ObjectExtensions
+namespace EasyTool
 {
     /// <summary>
-    /// 检查对象不为空（不为 null 且不为空字符串或空白字符）
+    /// 对象扩展方法类
     /// </summary>
-    public static bool IsNotEmpty(this object obj)
+    public static class ObjectExtensions
     {
-        if (obj == null)
+        /// <summary>
+        /// 检查对象是否为空（null 或者 空字符串或空白字符 或者 空集合）
+        /// </summary>
+        public static bool IsNullOrEmpty(this object obj)
         {
+            if (obj == null)
+            {
+                return true;
+            }
+
+            if (obj is string str)
+            {
+                return string.IsNullOrWhiteSpace(str);
+            }
+
+            if (obj is ICollection collection)
+            {
+                return collection.Count == 0;
+            }
+
             return false;
         }
 
-        if (obj is string str)
+        /// <summary>
+        /// 检查对象是否不为空（不为 null 且不为空字符串或空白字符或空集合）
+        /// </summary>
+        public static bool IsNotNullOrEmpty(this object obj)
         {
-            return !string.IsNullOrWhiteSpace(str);
+            return !IsNullOrEmpty(obj);
         }
-
-        if (obj is ICollection collection)
-        {
-            return collection.Count == 0;
-        }
-
-        return true;
     }
 }
