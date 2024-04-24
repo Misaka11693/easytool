@@ -191,6 +191,196 @@ namespace EasyTool.ConvertCategory
 
         #endregion
 
+        #region ==数据转换扩展(可空)==
+
+        /// <summary>
+        /// 尝试将输入对象转换为 Byte，如果无法转换则返回 null
+        /// </summary>
+        /// <param name="s">输入对象</param>
+        /// <returns>转换后的 Byte 值，如果无法转换则返回 null</returns>
+        /// <returns></returns>
+        public static byte? ToByteOrNull(this object s)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (byte.TryParse(s.ToString(), out byte result))
+                return result;
+
+            return null;
+        }
+
+        /// <summary>
+        /// 转换成short/Int16或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static short? ToShortOrNull(this object s)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (short.TryParse(s.ToString(), out short result))
+                return result;
+
+            return null;
+        }
+
+        /// <summary>
+        /// 转换成Int/Int32或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="round">是否四舍五入，默认false</param>
+        /// <returns></returns>
+        public static int? ToIntOrNull(this object s, bool round = false)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (s.GetType().IsEnum)
+            {
+                return (int)s;
+            }
+
+            if (s is bool b)
+                return b ? 1 : 0;
+
+            if (int.TryParse(s.ToString(), out int result))
+                return result;
+
+            var f = s.ToFloatOrNull();
+            if (f == null)
+                return null;
+
+            return round ? Convert.ToInt32(f) : (int)f;
+        }
+
+        /// <summary>
+        /// 转换成Long/Int64或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static long? ToLongOrNull(this object s)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (long.TryParse(s.ToString(), out long result))
+                return result;
+
+            return null;
+        }
+
+        /// <summary>
+        /// 转换成Float/Single或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="decimals">小数位数</param>
+        /// <returns></returns>
+        public static float? ToFloatOrNull(this object s, int? decimals = null)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (!float.TryParse(s.ToString(), out float result))
+                return null;
+
+            if (decimals == null)
+                return result;
+
+            return (float)Math.Round(result, decimals.Value);
+        }
+
+        /// <summary>
+        /// 转换成Double/Single或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="digits">小数位数</param>
+        /// <returns></returns>
+        public static double? ToDoubleOrNull(this object s, int? digits = null)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (!double.TryParse(s.ToString(), out double result))
+                return null;
+
+            if (digits == null)
+                return result;
+
+            return Math.Round(result, digits.Value);
+        }
+
+        /// <summary>
+        /// 转换成Decimal或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="decimals">小数位数</param>
+        /// <returns></returns>
+        public static decimal? ToDecimalOrNull(this object s, int? decimals = null)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (!decimal.TryParse(s.ToString(), out decimal result))
+                return null;
+
+            if (decimals == null)
+                return result;
+
+            return Math.Round(result, decimals.Value);
+        }
+
+        /// <summary>
+        /// 转换成DateTime或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static DateTime? ToDateTimeOrNull(this object s)
+        {
+            if (s == null || s == DBNull.Value)
+                return null;
+
+            if (DateTime.TryParse(s.ToString(), out DateTime result))
+                return result;
+
+            return null;
+        }
+
+        /// <summary>
+        /// 转换成Date或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static DateTime? ToDateOrNull(this object s)
+        {
+            var dateTime = s.ToDateTimeOrNull();
+            return dateTime?.Date;
+        }
+
+        /// <summary>
+        /// 转换成Boolean或者返回null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool? ToBoolOrNull(this object s)
+        {
+            if (s == null)
+                return null;
+
+            s = s.ToString().ToLower();
+            if (s.Equals(1) || s.Equals("1") || s.Equals("true") || s.Equals("是") || s.Equals("yes"))
+                return true;
+            if (s.Equals(0) || s.Equals("0") || s.Equals("false") || s.Equals("否") || s.Equals("no"))
+                return false;
+
+            if(Boolean.TryParse(s.ToString(), out bool result))
+                return result;
+
+            return null;
+        }
+        #endregion
+
         #region ==布尔转换==
 
         /// <summary>
