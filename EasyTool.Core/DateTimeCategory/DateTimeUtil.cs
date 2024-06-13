@@ -260,7 +260,7 @@ namespace EasyTool
         /// </summary>
         /// <param name="date">指定日期。</param>
         /// <returns>指定日期为当前年份的第几周。</returns>
-        public static int GetWeekOfYear(DateTime date)
+        public static int GetWeekIndexOfYear(DateTime date)
         {
             CultureInfo cultureInfo = CultureInfo.CurrentCulture;
             int week = cultureInfo.Calendar.GetWeekOfYear(date, cultureInfo.DateTimeFormat.CalendarWeekRule, cultureInfo.DateTimeFormat.FirstDayOfWeek);
@@ -272,7 +272,7 @@ namespace EasyTool
         /// </summary>
         /// <param name="date">指定日期。</param>
         /// <returns>指定日期为当前年份的第几月。</returns>
-        public static int GetMonthOfYear(DateTime date)
+        public static int GetMonthIndexOfYear(DateTime date)
         {
             return date.Month;
         }
@@ -282,7 +282,7 @@ namespace EasyTool
         /// </summary>
         /// <param name="date">指定日期。</param>
         /// <returns>指定日期为当前年份的第几季度。</returns>
-        public static int GetQuarterOfYear(DateTime date)
+        public static int GetQuarterIndexOfYear(DateTime date)
         {
             int quarter = (date.Month - 1) / 3 + 1;
             return quarter;
