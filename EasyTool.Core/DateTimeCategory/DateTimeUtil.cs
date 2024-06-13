@@ -254,5 +254,38 @@ namespace EasyTool
             }
             return days;
         }
+
+        /// <summary>
+        /// 获取指定日期为当前年份的第几周。
+        /// </summary>
+        /// <param name="date">指定日期。</param>
+        /// <returns>指定日期为当前年份的第几周。</returns>
+        public static int GetWeekOfYear(DateTime date)
+        {
+            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+            int week = cultureInfo.Calendar.GetWeekOfYear(date, cultureInfo.DateTimeFormat.CalendarWeekRule, cultureInfo.DateTimeFormat.FirstDayOfWeek);
+            return week;
+        }
+
+        /// <summary>
+        /// 获取指定日期为当前年份的第几月。
+        /// </summary>
+        /// <param name="date">指定日期。</param>
+        /// <returns>指定日期为当前年份的第几月。</returns>
+        public static int GetMonthOfYear(DateTime date)
+        {
+            return date.Month;
+        }
+
+        /// <summary>
+        /// 获取指定日期为当前年份的第几季度。
+        /// </summary>
+        /// <param name="date">指定日期。</param>
+        /// <returns>指定日期为当前年份的第几季度。</returns>
+        public static int GetQuarterOfYear(DateTime date)
+        {
+            int quarter = (date.Month - 1) / 3 + 1;
+            return quarter;
+        }
     }
 }

@@ -91,17 +91,24 @@ namespace EasyTool.Extension
         public static List<DateTime> GetMonthDays(this DateTime date) => DateTimeUtil.GetMonthDays(date);
 
         /// <summary>
-        /// 获取指定日期所在季度的所有日期。
+        /// 获取指定日期为当前年份的第几周。
         /// </summary>
         /// <param name="date">指定日期。</param>
-        /// <returns>指定日期所在季度的所有日期。</returns>
-        public static List<DateTime> GetQuarterDays(this DateTime date) => DateTimeUtil.GetQuarterDays(date);
+        /// <returns>指定日期为当前年份的第几周。</returns>
+        public static int GetWeekOfYear(this DateTime date) => DateTimeUtil.GetWeekOfYear(date);
 
         /// <summary>
-        /// 获取指定日期所在年份的所有日期。
+        /// 获取指定日期为当前年份的第几月。
         /// </summary>
         /// <param name="date">指定日期。</param>
-        /// <returns>指定日期所在年份的所有日期。</returns>
-        public static List<DateTime> GetYearDays(this DateTime date) => DateTimeUtil.GetYearDays(date);
+        /// <returns>指定日期为当前年份的第几月。</returns>
+        public static int GetMonthOfYear(this DateTime date) => DateTimeUtil.GetMonthOfYear(date);
+
+        /// <summary>
+        /// 获取指定日期为当前年份的第几季度。
+        /// </summary>
+        /// <param name="date">指定日期。</param>
+        /// <returns>指定日期为当前年份的第几季度。</returns>
+        public static int GetQuarterOfYear(this DateTime date) => DateTimeUtil.GetQuarterOfYear(date);
     }
 }
