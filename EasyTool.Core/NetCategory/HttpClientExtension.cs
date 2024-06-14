@@ -17,6 +17,22 @@ namespace EasyTool.Extension
         #region 标准的Http请求扩展
 
         /// <summary>
+        /// Get请求，并将返回Json结果反序列化对象
+        /// </summary>
+        /// <typeparam name="TRsp"></typeparam>
+        /// <param name="client">HttpClient对象</param>
+        /// <param name="requestUri">请求地址</param>
+        /// <param name="value">请求内容</param>
+        /// <param name="options">请求参数</param>
+        /// <param name="cancellationToken">取消令牌</param>
+        /// <returns></returns>
+        public static async Task<TRsp?> GetFromJsonAsync2<TRsp>(this HttpClient client, string requestUri, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            TRsp? rsp = await client.GetFromJsonAsync<TRsp>(requestUri, options, cancellationToken);
+            return rsp;
+        }
+
+        /// <summary>
         /// Post请求，并将返回Json结果反序列化对象
         /// </summary>
         /// <typeparam name="TRsp"></typeparam>
@@ -29,6 +45,7 @@ namespace EasyTool.Extension
         public static async Task<TRsp?> PostFromJsonAsync<TRsp>(this HttpClient client, string requestUri, object value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
         {
             var httpResponse = await client.PostAsJsonAsync(requestUri, value, options, cancellationToken);
+            httpResponse.EnsureSuccessStatusCode();
             TRsp? rsp = await httpResponse.Content.ReadFromJsonAsync<TRsp>();
             return rsp;
         }
@@ -46,6 +63,7 @@ namespace EasyTool.Extension
         public static async Task<TRsp?> PutFromJsonAsync<TRsp>(this HttpClient client, string requestUri, object value, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
         {
             var httpResponse = await client.PutAsJsonAsync(requestUri, value, options, cancellationToken);
+            httpResponse.EnsureSuccessStatusCode();
             TRsp? rsp = await httpResponse.Content.ReadFromJsonAsync<TRsp>();
             return rsp;
         }
@@ -61,6 +79,7 @@ namespace EasyTool.Extension
         public static async Task<TRsp?> DeleteFromJsonAsync<TRsp>(this HttpClient client, string requestUri, CancellationToken cancellationToken = default)
         {
             var httpResponse = await client.DeleteAsync(requestUri, cancellationToken);
+            httpResponse.EnsureSuccessStatusCode();
             TRsp? rsp = await httpResponse.Content.ReadFromJsonAsync<TRsp>();
             return rsp;
         }
